@@ -10,7 +10,7 @@ class personas extends Model
     use HasFactory;
     protected $table = "c_personas";
     protected $fillable = [
-        'nombre','tipo_identificacion_id', 'identificacion','cargo_id','direccion','telefono','correo'
+        'nombre','tipo_identificacion_id', 'identificacion','direccion','telefono','correo'
     ];
     protected $primaryKey = 'id';
 }

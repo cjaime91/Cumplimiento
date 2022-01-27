@@ -9,6 +9,14 @@
 
             <b class="arrow"></b>
         </li>
+        <li class="{{ !Route::is('sol_validacion')?:'active' }} hover">
+            <a href="{{ route('sol_validacion') }}">
+                <i class="menu-icon fa-solid fa-indent"></i>
+                <span class="menu-text">Solicitar Validación </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>
         <li class="{{ !Route::is('validacion') ?: 'active' }} hover">
             <a href="{{ route('validacion') }}">
                 <i class="menu-icon fa-solid fa-user-shield"></i>
@@ -25,29 +33,11 @@
 
             <b class="arrow"></b>
         </li>
-        <li class="{{ !Route::is('terceros') ?: 'active' }} {{ !Route::is('inf_fin') ?: 'active' }} hover">
-            <a href="#">
+        <li class="{{ !Route::is('terceros') ?: 'active' }} hover">
+            <a href="{{ route('terceros') }}">
                 <i class="menu-icon fa-solid fa-address-card"></i>
                 <span class="menu-text"> Gestión Terceros </span>
             </a>
-
-            <b class="arrow"></b>
-            <ul class="submenu">
-                <li class="{{ !Route::is('terceros') ?: 'active' }} hover">
-                    <a href="{{ route('terceros') }}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Listado
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-                <li class="{{ !Route::is('inf_fin') ?: 'active' }} hover">
-                    <a href="{{ route('inf_fin') }}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Información Financiera
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-            </ul>
         </li>
     </ul><!-- /.nav-list -->
 </div>

@@ -17,10 +17,10 @@
 
     <!-- text fonts -->
     <link rel="stylesheet" href="{{ asset('assets/css/ace-fonts.css') }}" />
-    <link rel="stylesheet" href="{{ asset("assets/fontawesome/css/fontawesome.css") }}" />
-    <link rel="stylesheet" href="{{ asset("assets/fontawesome/css/solid.css") }}" />
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/solid.css') }}" />
     <!-- ace styles -->
-    <link rel="stylesheet" href="{{ asset('assets/css/ace.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="{{ asset('assets/css/ace.css') }}" />
     <style>
         .form_user {
             font-size: 13px;
@@ -50,11 +50,17 @@
         <!-- Fin Aside -->
 
         <!-- Inicio Contenido -->
-        
+
         <div class="main-content">
             <div class="main-content-inner">
                 @yield('contenido')
             </div>
+            @include('modals.creacion_tercero')
+            @include('modals.actualizacion_tercero')
+            @include('modals.creacion_if_tercero')
+            @include('modals.actualizacion_if_tercero')
+            @include('modals.creacion_agente')
+            @include('modals.actualizacion_agente')
         </div>
         <!-- Fin Contenido -->
 
@@ -122,6 +128,18 @@
     <script src="{{ asset('docs/assets/js/language/html.js') }}"></script>
     <script src="{{ asset('docs/assets/js/language/css.js') }}"></script>
     <script src="{{ asset('docs/assets/js/language/javascript.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#modal-alert").modal("show");
+            setTimeout(function() {
+                $('#modal-alert').modal('hide');
+            }, 5000);
+            $(".alerta_form").delay(10000).slideUp(200, function() {
+                $(this).alert('close');
+            });
+        });
+    </script>
+    @yield('scriptsPlugins')
+    @yield('scripts')
 </body>
-
 </html>

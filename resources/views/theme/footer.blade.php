@@ -1,4 +1,4 @@
-<div class="footer">
+<div class="footer footer-fixed">
     <div class="footer-inner">
         <!-- #section:basics/footer -->
         <div class="footer-content">

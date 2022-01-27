@@ -20,8 +20,8 @@ class CrearTablaCAgentes extends Migration
             $table->string('direccion',100)->nullable();
             $table->string('telefono',20)->nullable();
             $table->string('correo',50)->nullable();
-            $table->unsignedInteger('ciudad_id');
-            $table->foreign('ciudad_id','fk_ciudad_agente')->references('id')->on('c_ciudades')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedInteger('ciudad_id_a');
+            $table->foreign('ciudad_id_a','fk_ciudad_agente')->references('id')->on('c_ciudades')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
     }
