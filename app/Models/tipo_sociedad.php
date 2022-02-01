@@ -13,4 +13,5 @@ class tipo_sociedad extends Model
         'tipo_sociedad', 'abreviacion', 'calificacion'
     ];
     protected $primaryKey = 'id';
+    public $timestamps = false;
 }

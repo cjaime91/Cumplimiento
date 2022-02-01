@@ -9,40 +9,70 @@ $('#tercero_id').select2();
 $('#vinculo_id').select2();
 
 $('#tipo_identificacion_id').select2();
-$('#tercero').click(function() {
+
+function cargar_terceros() {
+    var tipo_tercero = $tipo_tercero_id;
+    $('#tercero_id').empty();
+    $('#tercero_id').append('<option value="">---</option>');
+    if (pais_seleccionado) {
+        $.ajax({
+            url: "/terceros/getCiudades",
+            type: 'GET',
+            data: {
+                tipo_tercero_id: tipo_tercero
+            },
+            dataType: 'json',
+            success: function (response) {
+                $.each(response.data, function (key, value) {
+                    $('#tercero_id').append("<option value='" + value.id + "'>" + value
+                        .razon_social + "</option>")
+                });
+            },
+            error: function () {
+                alert('Hubo un error obteniendo los terceros');
+            }
+        });
+    }
+}
+
+$('#tipo_tercero_id').change(function () {
+    llenar_ciudad_a(pais_select_a.val(), "");
+})
+
+$('#tercero').click(function () {
     $('#tercero_id').empty()
     $('#tercero_id').append("<option value=''>---</option>")
     $.ajax({
         url: "/terceros/getTerceros",
         type: 'GET',
         dataType: 'json',
-        success: function(response) {
-            $.each(response.data, function(key, value) {
+        success: function (response) {
+            $.each(response.data, function (key, value) {
                 $('#tercero_id').append("<option value='" + value.id + "'>" + value
                     .razon_social +
                     "</option>")
             });
         },
-        error: function() {
+        error: function () {
             alert('Hubo un error obteniendo los Paises');
         }
     });
 })
-$('#agente').click(function() {
+$('#agente').click(function () {
     $('#tercero_id').empty()
     $('#tercero_id').append("<option value=''>---</option>")
     $.ajax({
         url: "/agentes/getAgentes",
         type: 'GET',
         dataType: 'json',
-        success: function(response) {
-            $.each(response.data, function(key, value) {
+        success: function (response) {
+            $.each(response.data, function (key, value) {
                 $('#tercero_id').append("<option value='" + value.id + "'>" + value
                     .razon_social_a +
                     "</option>")
             });
         },
-        error: function() {
+        error: function () {
             alert('Hubo un error obteniendo los Paises');
         }
     });
@@ -51,20 +81,20 @@ $('#agente').click(function() {
 var tabla_personas = $('#tabla_personas').DataTable({
     destroy: true,
     buttons: [{
-            "extend": "copy",
-            "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-            "className": "btn btn-white btn-primary btn-bold"
-        },
-        {
-            "extend": "excel",
-            "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
-            "className": "btn btn-white btn-primary btn-bold"
-        },
-        {
-            "extend": "pdf",
-            "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
-            "className": "btn btn-white btn-primary btn-bold"
-        }
+        "extend": "copy",
+        "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+        "className": "btn btn-white btn-primary btn-bold"
+    },
+    {
+        "extend": "excel",
+        "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+        "className": "btn btn-white btn-primary btn-bold"
+    },
+    {
+        "extend": "pdf",
+        "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+        "className": "btn btn-white btn-primary btn-bold"
+    }
     ],
     processing: true,
     scrollY: "280px",
@@ -74,42 +104,42 @@ var tabla_personas = $('#tabla_personas').DataTable({
     serverSide: true,
     ajax: "/personas/getPersonas",
     columns: [{
-            data: 'nombre',
-            name: 'nombre',
-        }, {
-            data: 'tipo_identificacion',
-            name: 'tipo_identificacion',
-        }, {
-            data: 'identificacion',
-            name: 'identificacion',
-        },
-        {
-            data: 'correo',
-            name: 'correo',
+        data: 'nombre',
+        name: 'nombre',
+    }, {
+        data: 'tipo_identificacion',
+        name: 'tipo_identificacion',
+    }, {
+        data: 'identificacion',
+        name: 'identificacion',
+    },
+    {
+        data: 'correo',
+        name: 'correo',
 
-        },
-        {
-            data: 'direccion',
-            name: 'direccion',
+    },
+    {
+        data: 'direccion',
+        name: 'direccion',
 
-        },
-        {
-            data: 'telefono',
-            name: 'telefono',
+    },
+    {
+        data: 'telefono',
+        name: 'telefono',
 
-        },
-        {
-            class: "details-control",
-            orderable: false,
-            data: null,
-            defaultContent: '<td>' +
-                '<div class="action-buttons center">' +
-                '<a href="#informacion_persona" role="button" class="blue" data-toggle="modal">' +
-                '<i class="ace-icon fa fa-info-circle align-top bigger-150 icon-on-right"></i>' +
-                '</a>' +
-                '</div>' +
-                '</td>',
-        },
+    },
+    {
+        class: "details-control",
+        orderable: false,
+        data: null,
+        defaultContent: '<td>' +
+            '<div class="action-buttons center">' +
+            '<a href="#informacion_persona" role="button" class="blue" data-toggle="modal">' +
+            '<i class="ace-icon fa fa-info-circle align-top bigger-150 icon-on-right"></i>' +
+            '</a>' +
+            '</div>' +
+            '</td>',
+    },
 
     ],
     responsive: true,
@@ -124,7 +154,7 @@ var tabla_personas = $('#tabla_personas').DataTable({
 var detailRows = [];
 
 
-$('#tabla_personas tbody').on('click', 'td.details-control', function() {
+$('#tabla_personas tbody').on('click', 'td.details-control', function () {
     var tr = $(this).closest('tr');
     var row = tabla_personas.row(tr);
     format(row.data());
@@ -178,7 +208,7 @@ function format(d) {
     cargar_tabla_vinculos(d.id);
 }
 
-$('#tabla_personas tbody').on('click', 'tr', function() {
+$('#tabla_personas tbody').on('click', 'tr', function () {
     if ($(this).hasClass('selected')) {
         $(this).removeClass('selected');
         limpiar_inputs_persona();
@@ -300,26 +330,26 @@ function validar_inputs_persona() {
     });
 }*/
 
-$('#tercero_inf').click(function() {
+$('#tercero_inf').click(function () {
     $('#tercero_id_inf').empty()
     $('#tercero_id_inf').append("<option value=''>---</option>")
     $.ajax({
         url: "/terceros/getTerceros",
         type: 'GET',
         dataType: 'json',
-        success: function(response) {
-            $.each(response.data, function(key, value) {
+        success: function (response) {
+            $.each(response.data, function (key, value) {
                 $('#tercero_id_inf').append("<option value='" + value.id + "'>" + value
                     .razon_social +
                     "</option>")
             });
             var table = $('#tabla_terceros_v').DataTable();
-            table.column(1).data().each(function(value, index) {
+            table.column(1).data().each(function (value, index) {
                 $("#tercero_id_inf option:contains('" + value + "')").remove();
             });
 
         },
-        error: function() {
+        error: function () {
             alert('Hubo un error obteniendo los Paises');
         }
     });
@@ -340,25 +370,25 @@ function limpiar_inputs_vinc() {
     $('#boton_limpiar_vt').attr('disabled', 'disabled')
 }
 
-$('#agente_inf').click(function() {
+$('#agente_inf').click(function () {
     $('#tercero_id_inf').empty()
     $('#tercero_id_inf').append("<option value=''>---</option>")
     $.ajax({
         url: "/agentes/getAgentes",
         type: 'GET',
         dataType: 'json',
-        success: function(response) {
-            $.each(response.data, function(key, value) {
+        success: function (response) {
+            $.each(response.data, function (key, value) {
                 $('#tercero_id_inf').append("<option value='" + value.id + "'>" + value
                     .razon_social_a +
                     "</option>");
             });
             var table = $('#tabla_terceros_v').DataTable();
-            table.column(1).data().each(function(value, index) {
+            table.column(1).data().each(function (value, index) {
                 $("#tercero_id_inf option:contains('" + value + "')").remove();
             });
         },
-        error: function() {
+        error: function () {
             alert('Hubo un error obteniendo los Paises');
         }
     });
@@ -370,7 +400,7 @@ function cargar_tabla_vinculos($id) {
     var t = $('#tabla_terceros_v').DataTable({
         destroy: true,
         dom: "<'row'<'col-sm-12'tr>>",
-        scrollY: "250px",
+        scrollY: "150px",
         processing: true,
         serverSide: true,
         scrollX: true,
@@ -383,39 +413,39 @@ function cargar_tabla_vinculos($id) {
             }
         },
         columns: [{
-                data: 'tipo_tercero',
-                name: 'tipo_tercero',
-            }, {
-                data: 'razon_social',
-                name: 'razon_social',
-            }, {
-                data: 'vinculo',
-                name: 'vinculo',
-            },
-            {
-                class: "actualizar_vinculo",
-                orderable: false,
-                data: null,
-                defaultContent: '<td>' +
-                    '<div class="action-buttons center">' +
-                    '<a href="" role="button" class="green" data-toggle="modal">' +
-                    '<i class="ace-icon fa fa-pencil bigger-130"></i>' +
-                    '</a>' +
-                    '</div>' +
-                    '</td>',
-            },
-            {
-                class: "eliminar_vinculo",
-                orderable: false,
-                data: null,
-                defaultContent: '<td>' +
-                    '<div class="action-buttons center">' +
-                    '<a href="" role="button" class="red" data-toggle="modal">' +
-                    '<i class="ace-icon fa fa-trash-o bigger-130"></i>' +
-                    '</a>' +
-                    '</div>' +
-                    '</td>',
-            },
+            data: 'tipo_tercero',
+            name: 'tipo_tercero',
+        }, {
+            data: 'razon_social',
+            name: 'razon_social',
+        }, {
+            data: 'vinculo',
+            name: 'vinculo',
+        },
+        {
+            class: "actualizar_vinculo",
+            orderable: false,
+            data: null,
+            defaultContent: '<td>' +
+                '<div class="action-buttons center">' +
+                '<a href="" role="button" class="green" data-toggle="modal">' +
+                '<i class="ace-icon fa fa-pencil bigger-130"></i>' +
+                '</a>' +
+                '</div>' +
+                '</td>',
+        },
+        {
+            class: "eliminar_vinculo",
+            orderable: false,
+            data: null,
+            defaultContent: '<td>' +
+                '<div class="action-buttons center">' +
+                '<a href="" role="button" class="red" data-toggle="modal">' +
+                '<i class="ace-icon fa fa-trash-o bigger-130"></i>' +
+                '</a>' +
+                '</div>' +
+                '</td>',
+        },
 
         ],
         responsive: true,
@@ -423,7 +453,7 @@ function cargar_tabla_vinculos($id) {
     t.columns.adjust().draw();
 }
 
-$('#tabla_terceros_v tbody').on('click', 'tr', function() {
+$('#tabla_terceros_v tbody').on('click', 'tr', function () {
     if ($(this).hasClass('selected')) {
         $(this).removeClass('selected');
     } else {
@@ -432,7 +462,7 @@ $('#tabla_terceros_v tbody').on('click', 'tr', function() {
     }
 });
 
-$('#tabla_terceros_v tbody').on('click', 'td.actualizar_vinculo', function() {
+$('#tabla_terceros_v tbody').on('click', 'td.actualizar_vinculo', function () {
     var tr = $(this).closest('tr');
     var row = $('#tabla_terceros_v').DataTable().row(tr);
     var d = row.data();
@@ -455,19 +485,19 @@ $('#tabla_terceros_v tbody').on('click', 'td.actualizar_vinculo', function() {
                     '<br><b>Vinculo Nuevo:</b> ' + vinc_n,
                 locale: 'es',
                 className: "modal-confirm",
-                callback: function(result) {
+                callback: function (result) {
                     if (result) {
                         datos['vinculo_id'] = $('#vinculo_id_inf option:selected').val();
                         $.ajax({
                             type: "PUT",
                             url: "/PVT/actualizar_pvt",
                             data: datos,
-                            success: function(msg) {
+                            success: function (msg) {
                                 $('#vinculo_id_inf').val("");
                                 $('#vinculo_id_inf').trigger('change');
                                 cargar_tabla_vinculos(d.persona_id);
                             },
-                            error: function() {
+                            error: function () {
                                 alert('Hubo un error actualizando los datos');
                             }
                         });
@@ -484,7 +514,7 @@ $('#tabla_terceros_v tbody').on('click', 'td.actualizar_vinculo', function() {
     }
 });
 
-$('#tabla_terceros_v tbody').on('click', 'td.eliminar_vinculo', function() {
+$('#tabla_terceros_v tbody').on('click', 'td.eliminar_vinculo', function () {
     var tr = $(this).closest('tr');
     var row = $('#tabla_terceros_v').DataTable().row(tr);
     var d = row.data();
@@ -498,16 +528,16 @@ $('#tabla_terceros_v tbody').on('click', 'td.eliminar_vinculo', function() {
             .razon_social + '?',
         locale: 'es',
         className: "modal-confirm",
-        callback: function(result) {
+        callback: function (result) {
             if (result) {
                 $.ajax({
                     type: "DELETE",
                     url: "/PVT/eliminar_vinculo",
                     data: datos,
-                    success: function(msg) {
+                    success: function (msg) {
                         cargar_tabla_vinculos(d.persona_id);
                     },
-                    error: function() {
+                    error: function () {
                         alert('Hubo un error actualizando los datos');
                     }
                 });
@@ -528,7 +558,7 @@ function agregar_vinculo_persona() {
             persona: $('.identificacion').html()
         },
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             p_id = response.data[0].id;
             if ($('#tercero_inf').is(':checked')) {
                 datos['tercero_id'] = rs;
@@ -541,13 +571,13 @@ function agregar_vinculo_persona() {
                 type: "POST",
                 url: "/PVT/guardar_vinculo",
                 data: datos,
-                success: function(msg) {
+                success: function (msg) {
                     cargar_tabla_vinculos(p_id);
                     limpiar_inputs_vinc();
                 }
             });
         },
-        error: function() {
+        error: function () {
             alert('Hubo un error obteniendo los años del tercero');
         }
     });

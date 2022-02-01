@@ -7,6 +7,7 @@ pais_select.select2();
 ciudad_select.select2();
 departamentos_select.select2();
 $('#tipo_identificacion_id').select2();
+$('#tipo_tercero_id').select2();
 $('#tipo_sociedad_id').select2();
 $('#tercero_id').select2();
 $('#anio').select2();
@@ -37,7 +38,7 @@ PaisSelect();
 function llenar_ciu_dep($id_pais, $id_ciudad, $id_dep) {
     var pais_seleccionado = $id_pais;
     ciudad_select.empty();
-    ciudad_select.append('<option value="">--Seleccione--</option>');
+    ciudad_select.append('<option value="">---</option>');
     if (pais_seleccionado) {
         $.ajax({
             url: "/terceros/getCiudades",
@@ -66,7 +67,7 @@ function llenar_ciu_dep($id_pais, $id_ciudad, $id_dep) {
         departamentos_select.removeAttr('disabled');
         barrio.removeAttr('disabled');
         departamentos_select.empty();
-        departamentos_select.append('<option value="">--Seleccione--</option>');
+        departamentos_select.append('<option value="">---</option>');
         $.ajax({
             url: "/terceros/getDepartamentos",
             type: 'GET',
@@ -87,7 +88,7 @@ function llenar_ciu_dep($id_pais, $id_ciudad, $id_dep) {
         });
     } else {
         departamentos_select.empty();
-        departamentos_select.append('<option value="">--Seleccione--</option>');
+        departamentos_select.append('<option value="">---</option>');
         departamentos_select.attr('disabled', 'disabled');
         barrio.attr('disabled', 'disabled');
         barrio.val('');
@@ -198,7 +199,7 @@ $("#collapse-gestion").click(function () {
 
 function cargar_anios_if($tercero_id) {
     $('#anio').empty();
-    $('#anio').append('<option value="">--Seleccione--</option>');
+    $('#anio').append('<option value="">---</option>');
     $.ajax({
         url: "/inf_fin/getanios_tercero",
         type: 'GET',
@@ -231,6 +232,8 @@ function format_datos_tercero(d) {
     /*Pasando Datos a los input*/
     $('#metodo_tercero').attr("value", "put");
     $('#razon_social').val(d.razon_social);
+    $('#tipo_tercero_id').val(d.tipo_tercero_id);
+    $('#tipo_tercero_id').trigger('change');
     $('#tipo_identificacion_id').val(d.tipo_identificacion_id);
     $('#tipo_identificacion_id').trigger('change');
     $('#identificacion').val(d.identificacion);
@@ -245,7 +248,6 @@ function format_datos_tercero(d) {
     $('#pais_id').val(d.IDP);
     $('#pais_id').trigger('change');
     llenar_ciu_dep(d.IDP, d.ciudad_id, d.departamento_id);
-    $('#barrio').val(d.barrio);
     $('#tercero_id').val(d.id);
     $('#tercero_id').trigger('change');
     cargar_anios_if(d.id);
@@ -264,6 +266,7 @@ function format_datos_tercero(d) {
 
 function habilitar_inputs_ib_tercero() {
     $('#razon_social').removeAttr('disabled');
+    $('#tipo_tercero_id').removeAttr('disabled');
     $('#tipo_identificacion_id').removeAttr('disabled');
     $('#tipo_sociedad_id').removeAttr('disabled');
     $('#identificacion').removeAttr('disabled');
@@ -278,12 +281,12 @@ function habilitar_inputs_ib_tercero() {
 
     if ($('#pais_id option:selected').text() == 'Colombia') {
         $('#departamento_id').removeAttr('disabled');
-        $('#barrio').removeAttr('disabled');
     }
 }
 
 function des_habilitar_inputs_ib_tercero() {
     $('#razon_social').attr('disabled', 'disabled')
+    $('#tipo_tercero_id').attr('disabled', 'disabled')
     $('#tipo_identificacion_id').attr('disabled', 'disabled')
     $('#tipo_sociedad_id').attr('disabled', 'disabled')
     $('#identificacion').attr('disabled', 'disabled')
@@ -298,7 +301,6 @@ function des_habilitar_inputs_ib_tercero() {
 
     if ($('#pais_id option:selected').text() == 'Colombia') {
         $('#departamento_id').attr('disabled', 'disabled')
-        $('#barrio').attr('disabled', 'disabled')
     }
 }
 
@@ -337,6 +339,8 @@ function des_habilitar_inputs_inf_tercero() {
 
 function limpiar_inputs_tercero() {
     $('#razon_social').val("");
+    $('#tipo_tercero_id').val("");
+    $('#tipo_tercero_id').trigger('change');
     $('#tipo_identificacion_id').val("");
     $('#tipo_identificacion_id').trigger('change');
     $('#identificacion').val("");
@@ -350,7 +354,6 @@ function limpiar_inputs_tercero() {
     $('#actividad_economica').val("");
     $('#pais_id').val("");
     $('#pais_id').trigger('change');
-    $('#barrio').val("");
 
     $('#tercero_id').val("");
     $('#tercero_id').trigger('change');

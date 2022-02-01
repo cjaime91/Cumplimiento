@@ -63,19 +63,16 @@
         <div class="well">
             <div class="row">
                 <div class="col-sm-3">
-                    <div class="control-group">
-                        <div class="radio">
-                            <label>
-                                <input name="tercero" id="tercero" type="radio" value="tercero" class="ace">
-                                <span class="lbl"> Cliente/Proveedor</span>
-                            </label>
-                        </div>
-
-                        <div class="radio">
-                            <label>
-                                <input name="tercero" id="agente" type="radio" value="agente" class="ace">
-                                <span class="lbl"> Agente</span>
-                            </label>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label class=""><b>Tipo de Tercero</b></label>
+                            <select class="input-sm" style="width: 100%;" id="tipo_tercero_id" name="tipo_tercero_id" required>
+                                <option value="">---</option>
+                                @foreach ($tipo_tercero as $tt)
+                                    <option value="{{ $tt->id }}">{{ $tt->tipo_tercero }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>

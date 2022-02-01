@@ -14,7 +14,7 @@
                 <label class=""><b>Tipo de Sociedad</b></label>
                 <select class="input-sm" style="width: 100%;" id="tipo_sociedad_id" name="tipo_sociedad_id"
                     required>
-                    <option value="">--Seleccione--</option>
+                    <option value="">---</option>
                     @foreach ($tipo_sociedad as $ts)
                         <option value="{{ $ts->id }}">{{ $ts->abreviacion }}</option>
                     @endforeach
@@ -28,7 +28,7 @@
                 <label class=""><b>Tipo Identificación</b></label>
                 <select class="input-sm" style="width: 100%;" id="tipo_identificacion_id"
                     name="tipo_identificacion_id" required>
-                    <option value="">--Seleccione--</option>
+                    <option value="">---</option>
                     @foreach ($tipo_identificacion as $ti)
                         <option value="{{ $ti->id }}">{{ $ti->abreviacion }}</option>
                     @endforeach
@@ -48,7 +48,7 @@
     <div class="col-sm-1">
         <div class="form-group row">
             <div class="col-sm-12">
-                <label class=""><b>Codigo Ver.</b></label>
+                <label class=""><b>Cod. Ver.</b></label>
                 <input type="text" class="form-control input-sm" placeholder="" id="cod_v" name="cod_v">
             </div>
         </div>
@@ -56,15 +56,29 @@
 </div>
 
 <div class="row">
-        <div class="col-sm-2">
-            <div class="form-group row">
-                <div class="col-sm-12">
-                    <label><b>Fecha Constitución</b></label>
-                    <input type="date" id="fecha_constitucion" name="fecha_constitucion"
-                        class="form-control center input-sm" placeholder="dd/mm/yyyy" />
-                </div>
+    <div class="col-sm-2">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label class=""><b>Tipo de Tercero</b></label>
+                <select class="input-sm" style="width: 100%;" id="tipo_tercero_id" name="tipo_tercero_id"
+                    required>
+                    <option value="">---</option>
+                    @foreach ($tipo_tercero as $tt)
+                        <option value="{{ $tt->id }}">{{ $tt->tipo_tercero }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label><b>Fecha Constitución</b></label>
+                <input type="date" id="fecha_constitucion" name="fecha_constitucion"
+                    class="form-control center input-sm" placeholder="dd/mm/yyyy" />
+            </div>
+        </div>
+    </div>
     <div class="col-sm-4">
         <div class="form-group row">
             <div class="col-sm-12">
@@ -82,6 +96,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row">
     <div class="col-sm-2">
         <div class="form-group row">
             <div class="col-sm-12">
@@ -90,8 +106,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
     <div class="col-sm-2">
         <div class="row">
             <div class="col-sm-12">
@@ -106,7 +120,7 @@
             <div class="col-sm-12">
                 <label><b>Pais</b></label>
                 <select class="form-control input-sm" style="width: 100%;" id="pais_id" name="pais_id" required>
-                    <option value="">--Seleccione--</option>
+                    <option value="">---</option>
                 </select>
             </div>
         </div>
@@ -116,7 +130,7 @@
             <div class="col-sm-12">
                 <label><b>Ciudad</b></label>
                 <select class="input-sm" style="width: 100%;" id="ciudad_id" name="ciudad_id" required>
-                    <option value="">--Seleccione--</option>
+                    <option value="">---</option>
                 </select>
             </div>
         </div>
@@ -127,16 +141,8 @@
                 <label><b>Departamento</b></label>
                 <select class="input-sm" style="width: 100%;" id="departamento_id" name="departamento_id"
                     disabled>
-                    <option value="">--Seleccione--</option>
+                    <option value="">---</option>
                 </select>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-2">
-        <div class="row">
-            <div class="col-sm-12">
-                <label><b>Barrio</b></label>
-                <input type="text" class="form-control input-sm" placeholder="" id="barrio" name="barrio" disabled>
             </div>
         </div>
     </div>

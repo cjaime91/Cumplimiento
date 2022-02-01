@@ -140,7 +140,8 @@
                     <div class="widget-toolbar no-border">
                         <ul class="nav nav-tabs" id="myTab">
                             <li class="active">
-                                <a data-toggle="tab" href="#terceros" id="tab_terceros" aria-expanded="false">Clientes / Proveedores</a>
+                                <a data-toggle="tab" href="#terceros" id="tab_terceros" aria-expanded="false">Clientes /
+                                    Proveedores</a>
                             </li>
 
                             <li class="">
@@ -155,30 +156,6 @@
                     <div class="widget-main padding-6">
                         <div class="tab-content">
                             <div id="terceros" class="tab-pane active fade in active">
-                                <div class="row">
-                                    <div class="widget-box widget-color-dark" id="widget-box-3">
-                                        <table id="tabla_terceros"
-                                            class="table text-nowrap table-bordered table-hover table-responsive">
-                                            <thead>
-                                                <tr>
-                                                    <th class="center">
-                                                        Razón Social
-                                                    </th>
-                                                    <th class="center">
-                                                        Tipo Identificacion
-                                                    </th>
-                                                    <th class="center">
-                                                        Identificacion
-                                                    </th>
-                                                    <th class="center">
-                                                        Fecha Constitucion
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-
                                 <form action="{{ route('guardar_tercero') }}" method="POST" autocomplete="off"
                                     id="form_tercero">
                                     @csrf
@@ -194,15 +171,16 @@
                                                 <button type="submit" name="boton_crear_t" id="boton_crear_t"
                                                     class="btn btn-sm btn-success btn-round">Crear</button>
                                                 <button type="button" name="boton_nuevo_t" id="boton_nuevo_t"
-                                                    class="btn btn-sm btn-success btn-round" onclick="limpiar_inputs_tercero()"
-                                                    style="display:none">Nuevo</button>
+                                                    class="btn btn-sm btn-success btn-round"
+                                                    onclick="limpiar_inputs_tercero()" style="display:none">Nuevo</button>
                                                 <button type="button" name="boton_limpiar_t" id="boton_limpiar_t"
                                                     class="btn btn-sm btn-primary btn-round"
                                                     onclick="limpiar_inputs_tercero()">limpiar</button>
 
                                                 <button type="button" name="boton_modificar_t" id="boton_modificar_t"
-                                                    class="btn btn-sm btn-info btn-round" onclick="validar_inputs_hab_tercero()"
-                                                    style="display:none;" disabled>Modificar</button>
+                                                    class="btn btn-sm btn-info btn-round"
+                                                    onclick="validar_inputs_hab_tercero()" style="display:none;"
+                                                    disabled>Modificar</button>
                                                 <button type="submit" name="boton_guardar_t" id="boton_guardar_t"
                                                     class="btn btn-sm btn-warning btn-round" style="display:none;"
                                                     disabled>Guardar</button>
@@ -243,9 +221,31 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </form>
 
+                                <div class="row">
+                                    <div class="widget-box widget-color-dark" id="widget-box-3">
+                                        <table id="tabla_terceros"
+                                            class="table text-nowrap table-bordered table-hover table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center">
+                                                        Razón Social
+                                                    </th>
+                                                    <th class="center">
+                                                        Tipo Identificacion
+                                                    </th>
+                                                    <th class="center">
+                                                        Identificacion
+                                                    </th>
+                                                    <th class="center">
+                                                        Fecha Constitucion
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                             <div id="agentes" class="tab-pane fade">
                                 <form action="{{ route('guardar_agente') }}" method="POST" autocomplete="off"
@@ -263,15 +263,16 @@
                                                 <button type="submit" name="boton_crear_a" id="boton_crear_a"
                                                     class="btn btn-sm btn-success btn-round">Crear</button>
                                                 <button type="button" name="boton_nuevo_a" id="boton_nuevo_a"
-                                                    class="btn btn-sm btn-success btn-round" onclick="limpiar_inputs_agente()"
-                                                    style="display:none">Nuevo</button>
+                                                    class="btn btn-sm btn-success btn-round"
+                                                    onclick="limpiar_inputs_agente()" style="display:none">Nuevo</button>
                                                 <button type="button" name="boton_limpiar_a" id="boton_limpiar_a"
                                                     class="btn btn-sm btn-primary btn-round"
                                                     onclick="limpiar_inputs_agente()">limpiar</button>
 
                                                 <button type="button" name="boton_modificar_a" id="boton_modificar_a"
-                                                    class="btn btn-sm btn-info btn-round" onclick="validar_inputs_hab_agente()"
-                                                    style="display:none;" disabled>Modificar</button>
+                                                    class="btn btn-sm btn-info btn-round"
+                                                    onclick="validar_inputs_hab_agente()" style="display:none;"
+                                                    disabled>Modificar</button>
                                                 <button type="submit" name="boton_guardar_a" id="boton_guardar_a"
                                                     class="btn btn-sm btn-warning btn-round" style="display:none;"
                                                     disabled>Guardar</button>

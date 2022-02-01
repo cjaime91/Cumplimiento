@@ -13,4 +13,5 @@ class tipo_identificacion extends Model
         'tipo_identificacion', 'abreviacion'
     ];
     protected $primaryKey = 'id';
+    public $timestamps = false;
 }

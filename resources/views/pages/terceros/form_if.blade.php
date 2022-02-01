@@ -5,8 +5,8 @@
                 <label class=""><b>Razon Social</b></label>
                 <select class="input-sm" style="width: 100%;" id="tercero_id" name="tercero_id" required>
                     <option value="">--Seleccione--</option>
-                    @foreach ($terceros as $tercero)
-                        <option value="{{ $tercero->id }}">{{ $tercero->razon_social }}</option>
+                    @foreach ($terceros_if as $tercero_if)
+                        <option value="{{ $tercero_if->id }}">{{ $tercero_if->razon_social }}</option>
                     @endforeach
                 </select>
             </div>

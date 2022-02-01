@@ -11,6 +11,7 @@ use App\Models\paises;
 use App\Models\terceros;
 use App\Models\tipo_identificacion;
 use App\Models\tipo_sociedad;
+use App\Models\tipo_tercero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,9 +27,11 @@ class TercerosController extends Controller
     {
         $tipo_identificacion = tipo_identificacion::get();
         $tipo_sociedad = tipo_sociedad::get();
+        $tipo_tercero = tipo_tercero::get();
         $terceros = terceros::orderBy('razon_social', 'asc')->get();
+        $terceros_if = terceros::whereIn('tipo_tercero_id',array(2, 3))->orderBy('razon_social', 'asc')->get();
         $agentes = agentes::orderBy('razon_social_a', 'asc')->get();
-        return view('pages.terceros.index', compact('tipo_identificacion', 'tipo_sociedad', 'terceros', 'agentes'));
+        return view('pages.terceros.index', compact('tipo_identificacion', 'tipo_sociedad', 'terceros', 'agentes', 'tipo_tercero','terceros_if'));
     }
 
     /**
@@ -164,13 +167,26 @@ class TercerosController extends Controller
                     DB::raw("IF(c_terceros.direccion IS NULL,'',c_terceros.direccion) AS direccion"),
                     DB::raw("IF(c_terceros.telefono IS NULL,'',c_terceros.telefono) AS telefono"),
                     DB::raw("IF(c_terceros.actividad_economica IS NULL,'',c_terceros.actividad_economica) AS actividad_economica"),
-                    DB::raw("IF(c_terceros.barrio IS NULL,'',c_terceros.barrio) AS barrio"),
                     "tipo_ide.abreviacion AS TIDE", "tipo_soc.abreviacion AS TSOC", "pais.pais AS PID", "pais.id AS IDP", "ciudad.ciudad",
                     "tipo_ide.tipo_identificacion AS identificacion_t", "tipo_soc.tipo_sociedad AS sociedad_t"
                 ]);
-                return DataTables::of($datos)->make(true);
+            return DataTables::of($datos)->make(true);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Error al traer las ciudades de la base de datos'], 500);
         }
+    }
+
+    public function getTerceroXtipo(Request $request)
+    {
+        try {
+            $tercero_id = $request->input('tipo_tercero_id');
+            $terceros = terceros::when($tercero_id, function ($query) use ($tercero_id) {
+                $query->where('tipo_tercero_id', $tercero_id);
+            })->get();
+            $response = ['data' => $terceros];
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Error al traer los terceros de la base de datos'], 500);
+        }
+        return response()->json($response);
     }
 }

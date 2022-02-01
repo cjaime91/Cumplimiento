@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\persona_vinculo_tercero;
 use App\Models\personas;
 use App\Models\tipo_identificacion;
+use App\Models\tipo_tercero;
 use App\Models\tipo_vinculos;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -20,7 +21,8 @@ class PersonasController extends Controller
     {
         $tipo_identificacion = tipo_identificacion::get();
         $tipo_vinculo = tipo_vinculos::get();
-        return view('pages.personas.index', compact('tipo_identificacion', 'tipo_vinculo'));
+        $tipo_tercero = tipo_tercero::get();
+        return view('pages.personas.index', compact('tipo_identificacion', 'tipo_vinculo', 'tipo_tercero'));
     }
 
     /**
@@ -140,7 +142,7 @@ class PersonasController extends Controller
     {
         try {
             $datos = personas::leftJoin("c_tipo_identificacion AS tipo_ide", "c_personas.tipo_identificacion_id", "=", "tipo_ide.id")
-            ->get(['c_personas.*', 'tipo_ide.tipo_identificacion']);
+                ->get(['c_personas.*', 'tipo_ide.tipo_identificacion']);
             return DataTables::of($datos)->make(true);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Error al traer las ciudades de la base de datos'], 500);
